@@ -98,7 +98,7 @@ class ClanBattle:
 
 
 def stage_data(final=0):
-    # start_time = datetime.now()
+    start_time = datetime.now()
     App = ClanBattle(cg.pvid, cg.puid, cg.access_key)
     save_data = []
     for page in range(30 if not final else 300):
@@ -115,7 +115,7 @@ def stage_data(final=0):
     end_time = datetime.now()
     filename = str(end_time.strftime("%Y%m%d%H")) + str(int(int(end_time.strftime("%M"))/30)*30).zfill(2)
     df.to_csv('qd/1/'+filename+'.csv')
-    # print(end_time-start_time)
+    print(end_time-start_time)
     async def add_score_list(page):
         score_list = []
         retry = 0
@@ -156,8 +156,8 @@ def stage_data(final=0):
 
     df.insert(loc=len(df.columns), column='bili_rank', value=rank_list)
     df.to_csv('qd/1/'+filename+'.csv')
-    # bili_time = datetime.now()
-    # print(end_time-start_time, bili_time-end_time)
+    bili_time = datetime.now()
+    print(end_time-start_time, bili_time-end_time)
 
 
 if __name__ == '__main__':
