@@ -116,36 +116,39 @@ def stage_data(final=0):
     filename = str(end_time.strftime("%Y%m%d%H")) + str(int(int(end_time.strftime("%M"))/30)*30).zfill(2)
     df.to_csv('qd/1/'+filename+'.csv')
     print(end_time-start_time)
-    async def add_score_list(page):
-        score_list = []
-        retry = 0
-        while retry < 4:
-            # print('查询'+str(page))
-            page_data = await bilicompare.bilipage(page)
-            if not page_data:
-                retry += 1
-                time.sleep(1)
-                # continue
-            else:
-                try:
-                    for clan in page_data:
-                        score_list.append(clan['damage'])
-                    return score_list
-                except Exception:
+    async def add_score_list(sem, page):
+        async with sem:
+            score_list = []
+            retry = 0
+            while retry < 4:
+                # print('查询'+str(page))
+                page_data = await bilicompare.bilipage(page)
+                if not page_data:
                     retry += 1
-                    time.sleep(1)
+                    # time.sleep(1)
                     # continue
+                else:
+                    try:
+                        for clan in page_data:
+                            score_list.append(clan['damage'])
+                        return score_list
+                    except Exception:
+                        retry += 1
+                        # time.sleep(1)
+                        # continue
     score_list = []
+    sem = asyncio.Semaphore(8)
     async def score_main():
         tasks = []
-        for page in range(55 if not final else 250):
-            task = asyncio.ensure_future(add_score_list(page))
+        for page in range(55 if not final else 210):
+            task = asyncio.create_task(add_score_list(sem, page))
             tasks.append(task)
         await asyncio.gather(*tasks)
         for i in tasks:
             if i._result:
                 score_list.extend(i._result)
             else:
+                # print('add0')
                 score_list.extend([score_list[-1] if score_list else 0]*100)
     asyncio.run(score_main())
 
