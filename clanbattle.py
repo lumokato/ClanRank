@@ -137,8 +137,8 @@ def stage_data(final=0):
                         # time.sleep(1)
                         # continue
     score_list = []
-    sem = asyncio.Semaphore(8)
     async def score_main():
+        sem = asyncio.Semaphore(8)
         tasks = []
         for page in range(55 if not final else 210):
             task = asyncio.create_task(add_score_list(sem, page))
@@ -150,7 +150,9 @@ def stage_data(final=0):
             else:
                 # print('add0')
                 score_list.extend([score_list[-1] if score_list else 0]*100)
-    asyncio.run(score_main())
+    # asyncio.run(score_main())
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(score_main())
 
     qd_score_list = df['damage'].to_list()
     rank_list = []
