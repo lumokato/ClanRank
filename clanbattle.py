@@ -114,8 +114,9 @@ def stage_data(final=0):
     df.columns = ['rank', 'clan_name', 'leader_name', 'member_num', 'damage', 'lap', 'boss_id', 'remain', 'grade_rank']
     end_time = datetime.now()
     filename = str(end_time.strftime("%Y%m%d%H")) + str(int(int(end_time.strftime("%M"))/30)*30).zfill(2)
-    df.to_csv('qd/1/'+filename+'.csv')
+    # df.to_csv('qd/1/'+filename+'.csv')
     print(end_time-start_time)
+
     async def add_score_list(sem, page):
         async with sem:
             score_list = []
@@ -137,6 +138,7 @@ def stage_data(final=0):
                         # time.sleep(1)
                         # continue
     score_list = []
+
     async def score_main():
         sem = asyncio.Semaphore(8)
         tasks = []
@@ -156,10 +158,14 @@ def stage_data(final=0):
 
     qd_score_list = df['damage'].to_list()
     rank_list = []
-    for score in qd_score_list:
-        rank_list.append(bilicompare.binarySearch(score_list, 0, len(score_list)-1, score))
 
-    df.insert(loc=len(df.columns), column='bili_rank', value=rank_list)
+    try:
+        for score in qd_score_list:
+            rank_list.append(bilicompare.binarySearch(score_list, 0, len(score_list)-1, score))
+
+        df.insert(loc=len(df.columns), column='bili_rank', value=rank_list)
+    except Exception:
+        time.sleep(1)
     df.to_csv('qd/1/'+filename+'.csv')
     bili_time = datetime.now()
     print(end_time-start_time, bili_time-end_time)
