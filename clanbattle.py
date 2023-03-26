@@ -152,14 +152,15 @@ def stage_data(final=0):
             else:
                 # print('add0')
                 score_list.extend([score_list[-1] if score_list else 0]*100)
-    # asyncio.run(score_main())
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(score_main())
-
-    qd_score_list = df['damage'].to_list()
-    rank_list = []
 
     try:
+        # loop = asyncio.get_event_loop()
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(score_main())
+
+        qd_score_list = df['damage'].to_list()
+        rank_list = []
         for score in qd_score_list:
             rank_list.append(bilicompare.binarySearch(score_list, 0, len(score_list)-1, score))
 
