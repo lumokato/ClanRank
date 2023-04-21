@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Remove</title>
+</head>
+
+<body>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+    <div id="intro">输入本人的QQ号与游戏id（可只输入后四位）。 <br/>
+    点击"移除成员"可踢出自己，点击"清理位置"可清除误加入的账号。<br/>
+    如有问题请联系2332483996。</div>
+    <br> QQ <input type="text" name="qq" id="qq"></br>
+    <br> ID <input type="text" name="id" id="id"></br>
+    <div id="myDiv"></div>
+    <p><button id="b01" type="button">移除成员</button></p>
+    <p><button id="b02" type="button">清理位置</button></p>
+
+    <a href="http://api.120224.xyz/static/ali.jpg"><span>显示付款码</span></a>
+{#    <img src="../static/ali.jpg" width="270" height="420"/>#}
+    <script>
+        $(function () {
+            $("#b01").click(function() {
+                $.ajax({
+                    url: "remove_user",
+                    type: "GET",
+                    dataType: "text",
+                    data: {
+                        qq: $("#qq").val(),
+                        id: $("#id").val(),
+                        type: "remove"
+                    },
+                    success: function (data) {
+                        $("#myDiv").html(data);
+                    }
+                })
+
+            });
+            $("#b02").click(function() {
+                $.ajax({
+                    url: "remove_user",
+                    type: "GET",
+                    dataType: "text",
+                    data: {
+                        qq: $("#qq").val(),
+                        id: $("#id").val(),
+                        type: "clean"
+                    },
+                    success: function (data) {
+                        $("#myDiv").html(data);
+                    }
+                })
+            });
+        })
+    </script>
+
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-from flask import Flask, abort, request, jsonify
+from flask import Flask, abort, request, jsonify, render_template
 import json
 import os
 import sys
@@ -229,6 +229,23 @@ def getalltime_history_qd():
         data_dict[si] = sorted(data_dict[si])
     ret_dict = {"state": "success", "data": data_dict}
     return jsonify(ret_dict)
+
+
+@app.route('/user')
+def index():
+    return render_template('index.html')
+
+
+@app.route('/remove_user',methods=['GET'])#路由
+def test_post():
+    import user
+    qq = request.args.get("qq")
+    vid = request.args.get("id")
+    clear_type = request.args.get("type")
+    msg = user.user_clear(qq, vid, clear_type)
+    return msg
+
+
 if __name__ == '__main__':
-    app.run(host = '0.0.0.0', port=5088)
-    #这里指定了地址和端口号。
+    # 这里指定了地址和端口号。
+    app.run(host='0.0.0.0', port=5088)
