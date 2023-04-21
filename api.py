@@ -236,7 +236,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/remove_user',methods=['GET'])#路由
+@app.route('/remove_user',methods=['POST'])#路由
 def test_post():
     import user
     qq = request.args.get("qq")

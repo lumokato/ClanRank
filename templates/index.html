@@ -24,8 +24,8 @@
             $("#b01").click(function() {
                 $.ajax({
                     url: "remove_user",
-                    type: "GET",
-                    dataType: "text",
+                    type: "POST",
+                    dataType: "json",
                     data: {
                         qq: $("#qq").val(),
                         id: $("#id").val(),
@@ -40,8 +40,8 @@
             $("#b02").click(function() {
                 $.ajax({
                     url: "remove_user",
-                    type: "GET",
-                    dataType: "text",
+                    type: "POST",
+                    dataType: "json",
                     data: {
                         qq: $("#qq").val(),
                         id: $("#id").val(),
