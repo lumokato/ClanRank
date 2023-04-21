@@ -239,9 +239,9 @@ def index():
 @app.route('/remove_user', methods=['POST'])#路由
 def test_post():
     import user
-    qq = request.args.get("qq")
-    vid = request.args.get("id")
-    clear_type = request.args.get("type")
+    qq = request.form.get("qq")
+    vid = request.form.get("id")
+    clear_type = request.form.get("type")
     msg = user.user_clear(qq, vid, clear_type)
     return msg
 
