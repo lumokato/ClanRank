@@ -107,5 +107,9 @@ def user_clear(qq, vid, clear_type):
                 msg = remove_user(join_clan, vid)
                 total["users"]["0"]["last_clean_time"] = req_time
                 save_total()
+    elif user_type != 'none' and clear_type == 'clan':
+        for clan in total["clan"]:
+            if clan["clan_id"] == join_clan:
+                msg = '工会名：' + clan["name"]
 
     return msg

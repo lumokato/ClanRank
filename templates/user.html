@@ -9,7 +9,7 @@
 
 <body>
     <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
-    <div id="intro">输入本人的QQ号与游戏id（可只输入后四位）。 <br />
+    <div id="intro">输入本人的QQ号与游戏内13位id（可只输入后四位）。 <br />
         点击"移除成员"可踢出自己，点击"清理位置"可清除误加入的账号。<br />
         如有问题请联系2332483996。</div>
     <br> QQ <input type="text" name="qq" id="qq"></br>
@@ -17,6 +17,7 @@
     <div id="myDiv"></div>
     <p><button id="b01" type="button">移除成员</button></p>
     <p><button id="b02" type="button">清理位置</button></p>
+    <p><button id="b03" type="button">显示工会</button></p>
     <script>
         $(function () {
             $("#b01").click(function () {
@@ -33,7 +34,6 @@
                         $("#myDiv").html(data);
                     }
                 })
-
             });
             $("#b02").click(function () {
                 $.ajax({
@@ -49,6 +49,22 @@
                         $("#myDiv").html(data);
                     }
                 })
+            });
+            $("#b03").click(function () {
+                $.ajax({
+                    url: "remove_user",
+                    type: "POST",
+                    dataType: "text",
+                    data: {
+                        qq: $("#qq").val(),
+                        id: $("#id").val(),
+                        type: "clan"
+                    },
+                    success: function (data) {
+                        $("#myDiv").html(data);
+                    }
+                })
+
             });
         })
     </script>
