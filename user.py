@@ -93,10 +93,12 @@ def user_clear(qq, vid, clear_type):
         else:
             msg = '操作间隔小于30分钟'
     elif user_type == 'admin' and clear_type == 'clean':
-        # msg = '调用remove_other()' + vid
-        msg = remove_other(vid, True)
-        total["users"]["0"]["last_clean_time"] = req_time
-        save_total()
+        for clan in total["clan"]:
+            if str(clan["clan_id"]) == vid:
+                # msg = '调用remove_other()' + vid
+                msg = remove_other(clan["clan_id"], True)
+                total["users"]["0"]["last_clear_time"] = req_time
+                save_total()
     elif user_type == 'admin' and clear_type == 'remove':
         for user_index in total["users"].keys():
             if str(total["users"][user_index]["vid"]) == vid:

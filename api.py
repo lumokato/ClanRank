@@ -233,7 +233,7 @@ def getalltime_history_qd():
 
 @app.route('/user')
 def index():
-    return render_template('index.html')
+    return render_template('user.html')
 
 
 @app.route('/remove_user', methods=['POST'])#路由
