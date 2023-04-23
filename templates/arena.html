@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta charset="UTF-8">
+    <title>查询</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+</head>
+
+<body>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+    <div id="intro"><h1>公主连结渠道服分场查询<br/></h1>
+        <h4>请输入游戏内13位id<br/></h4></div>
+    <br> 查询ID <input type="number" name="id" id="id"></br>
+    <p><button id="b01" type="button">查询</button></p>
+    <h3><div id="myDiv"></div></h3>
+    <script>
+        $(function () {
+            $("#b01").click(function () {
+                $.ajax({
+                    url: "arena_search",
+                    type: "POST",
+                    dataType: "text",
+                    data: {
+                        id: $("#id").val()
+                    },
+                    success: function (data) {
+                        $("#myDiv").html(data);
+                    }
+                })
+            });
+        })
+    </script>
+
+</body>
+
+</html>
