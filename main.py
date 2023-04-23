@@ -34,6 +34,8 @@ if __name__ == '__main__':
     monthdays = calendar.monthrange(today.year, today.month)
     start_time = datetime.datetime(today.year, today.month, monthdays[1]-5, 5, 0)
     end_time = datetime.datetime(today.year, today.month, monthdays[1], 0, 0)
+    if bilievent.time_battle_bilibili(datetime.datetime.now()):
+        start_time, end_time = bilievent.time_battle_bilibili(datetime.datetime.now())
     scheduler.add_job(move_data, 'date', run_date=start_time-datetime.timedelta(hours=16))
     scheduler.add_job(clanbattle.stage_data, 'interval', minutes=30, start_date=start_time+datetime.timedelta(minutes=2), end_date=end_time+datetime.timedelta(minutes=2))
     scheduler.add_job(clanbattle.stage_data, 'date', run_date=end_time+datetime.timedelta(days=7.64), args=[1])
