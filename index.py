@@ -10,8 +10,14 @@ client = arena.ArenaSearch()
 app = Flask(__name__)
 app.debug = False
 
-@app.route('/farm')
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
+    return render_template('index.html')
+
+
+@app.route('/farm')
+def index_farm():
     return render_template('farm.html')
 
 
@@ -25,11 +31,11 @@ def test_post():
 
 
 @app.route('/arena')
-def index2():
+def index_arena():
     return render_template('arena.html')
 
 
-@app.route('/arena_search', methods=['POST'])#路由
+@app.route('/arena_search', methods=['POST'])# 路由
 def arena_search():
     global client
     ip = request.access_route[0]

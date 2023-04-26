@@ -1,15 +1,10 @@
-import time
-
-from flask import Flask, abort, request, jsonify, render_template
+from flask import Flask, abort, request, jsonify
 import json
 import os
 import sys
 import datetime
 import pandas as pd
-import farm
-import arena
 
-client = arena.ArenaSearch()
 
 app = Flask(__name__)
 app.debug = False
@@ -22,6 +17,8 @@ error_page_error = {"state": "fail", "error_code": 10, "error_title": "Error - I
 
 readfile = {}
 servetime = {}
+
+
 @app.before_request
 def before_request():
     if request.method == 'OPTIONS':
@@ -35,12 +32,14 @@ def before_request():
             abort(403)
     servetime[ip] = currtime
 
+
 @app.after_request
 def cors(environ):
     environ.headers['Access-Control-Allow-Origin']='*'
     environ.headers['Access-Control-Allow-Method']='*'
     environ.headers['Access-Control-Allow-Headers']='*'
     return environ
+
 
 @app.route('/search/scoreline',methods=['post'])
 def search_scoreline():
@@ -70,6 +69,7 @@ def search_scoreline():
     data_dict = dfa.to_dict(orient = 'index')
     ret_dict = {"state": "success", "total" : 1, "data": data_dict}
     return jsonify(ret_dict)
+
 
 @app.route('/search/clan_name',methods=['post'])
 def search_by_clan_name():
@@ -108,6 +108,7 @@ def search_by_clan_name():
     ret_dict = {"state": "success", "total" : dfa.shape[0], "data": data_dict}
     return jsonify(ret_dict)
 
+
 @app.route('/search/leader_name',methods=['post'])
 def search_by_leader_name():
     if not request.data:
@@ -144,6 +145,7 @@ def search_by_leader_name():
     data_dict = dfb.to_dict(orient = 'index')
     ret_dict = {"state": "success", "total" : dfa.shape[0], "data": data_dict}
     return jsonify(ret_dict)
+
 
 @app.route('/search/rank',methods=['post'])
 def search_by_rank():
@@ -185,6 +187,7 @@ def search_by_rank():
     ret_dict = {"state": "success", "total" : dfa.shape[0], "data": data_dict}
     return jsonify(ret_dict)
 
+
 @app.route('/current/getalltime/tw',methods=['get'])
 def getalltime_tw():
     data_dict = {}
@@ -203,6 +206,7 @@ def getalltime_tw():
 
     ret_dict = {"state": "success", "data": data_dict}
     return jsonify(ret_dict)
+
 
 @app.route('/current/getalltime/qd',methods=['get'])
 def getalltime_qd():
@@ -223,6 +227,7 @@ def getalltime_qd():
     ret_dict = {"state": "success", "data": data_dict}
     return jsonify(ret_dict)
 
+
 @app.route('/history/getalltime/qd',methods=['get'])
 def getalltime_history_qd():
     data_dict = {}
@@ -237,36 +242,5 @@ def getalltime_history_qd():
     return jsonify(ret_dict)
 
 
-@app.route('/farm')
-def index():
-    return render_template('farm.html')
-
-
-@app.route('/remove_user', methods=['POST'])#路由
-def test_post():
-    qq = request.form.get("qq")
-    vid = request.form.get("id")
-    clear_type = request.form.get("type")
-    msg = farm.user_clear(qq, vid, clear_type)
-    return msg
-
-
-@app.route('/arena')
-def index2():
-    return render_template('arena.html')
-
-
-@app.route('/arena_search', methods=['POST'])#路由
-def arena_search():
-    global client
-    ip = request.access_route[0]
-    vid = request.form.get("id")
-    with open('search.txt', 'a') as f:
-        f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+'    '+ip+'    '+vid+'\n')
-    msg = client.user_search(vid)
-    return msg
-
-
 if __name__ == '__main__':
-    # 这里指定了地址和端口号。
     app.run(host='0.0.0.0', port=5088)
