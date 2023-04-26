@@ -11,11 +11,6 @@ app = Flask(__name__)
 app.debug = False
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
 @app.route('/farm')
 def index_farm():
     return render_template('farm.html')
@@ -48,4 +43,4 @@ def arena_search():
 
 if __name__ == '__main__':
     # 这里指定了地址和端口号。
-    app.run(host='0.0.0.0', debug=True, port=8000)
+    app.run(host='0.0.0.0', debug=True, port=8001)
