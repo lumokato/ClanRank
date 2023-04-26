@@ -1,6 +1,6 @@
 import time
 
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, render_template
 
 import farm
 import arena
@@ -8,10 +8,22 @@ import arena
 client = arena.ArenaSearch()
 
 app = Flask(__name__)
-app.debug = False
+app.debug = True
+
+app.jinja_env.block_start_string = '(%'  # 修改块开始符号
+app.jinja_env.block_end_string = '%)'  # 修改块结束符号
+app.jinja_env.variable_start_string = '(('  # 修改变量开始符号
+app.jinja_env.variable_end_string = '))'  # 修改变量结束符号
+app.jinja_env.comment_start_string = '(#'  # 修改注释开始符号
+app.jinja_env.comment_end_string = '#)'  # 修改注释结束符号
 
 
-@app.route('/farm')
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    return render_template('index.html')
+
+
+@app.route('/farm', methods=['GET', 'POST'])
 def index_farm():
     return render_template('farm.html')
 
@@ -43,4 +55,4 @@ def arena_search():
 
 if __name__ == '__main__':
     # 这里指定了地址和端口号。
-    app.run(host='0.0.0.0', debug=True, port=8001)
+    app.run(host='0.0.0.0', port=8000)
