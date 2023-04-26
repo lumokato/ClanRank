@@ -9,16 +9,16 @@ var app = new Vue({
         },
         lang : "zh-cn",
         title : {
-            "zh-cn": "PCR 渠道服公会战排名查询",
+            "zh-cn": "PCR 渠道服工具箱",
             "zh-tw": "公連渠道服戰隊競賽排名查詢",  
         },
         text_dict : {
             "search_current_rank" :{
-                "zh-cn": "查询当期",
+                "zh-cn": "当期会战",
                 "zh-tw": "查詢本期",
             },
             "search_history" :{
-                "zh-cn": "查询历史",
+                "zh-cn": "历史会战",
                 "zh-tw": "查詢記錄",
             },
             "github_link" :{
