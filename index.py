@@ -48,4 +48,4 @@ def arena_search():
 
 if __name__ == '__main__':
     # 这里指定了地址和端口号。
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0', debug=True, port=8000)
