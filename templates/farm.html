@@ -4,24 +4,24 @@
 <head>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="UTF-8">
-    <title>农场自助管理网站</title>
+    <title>农场信息</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 </head>
 
-<body>
-<div id="PCRClanBattleSearcher">
-    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-    <script src="/static/index.js?v=0.1"></script>
-    <div class="ui borderless top fixed menu">
+<body style="padding-top: 50px;">
+    <div id="PCRClanBattleSearcher">
+        <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+        <script src="/static/index.js?v=0.1"></script>
+        <div class="ui borderless top fixed menu">
             <div class="ui container menu_container">
                 <a class="item" href="https://clan.120224.xyz"> <img src="/static/112431.ico">
                     &#12288;PCR 渠道服工具箱</a>
                 <div class="right menu">
-                    <a class="item current_rank" href="https://clan.120224.xyz" :class="{'active' : is_current}" @click="changeToCurrent()"><i
-                            aria-hidden="true" class="home icon"></i>当期会战</a>
-                    <a class="item history_rank" href="https://clan.120224.xyz" :class="{'active' : is_history}" @click="changeToHistory()"><i
-                            aria-hidden="true" class="calendar icon"></i>历史会战</a>
+                    <a class="item current_rank" href="https://clan.120224.xyz" :class="{'active' : is_current}"
+                        @click="changeToCurrent()"><i aria-hidden="true" class="home icon"></i>当期会战</a>
+                    <a class="item history_rank" href="https://clan.120224.xyz" :class="{'active' : is_history}"
+                        @click="changeToHistory()"><i aria-hidden="true" class="calendar icon"></i>历史会战</a>
                     <a class="item" href="https://clan.120224.xyz/arena"><i aria-hidden="true"
                             class="search icon"></i>分场查询</a>
                     <a class="item" href="https://clan.120224.xyz/farm"><i aria-hidden="true"
@@ -38,71 +38,97 @@
             </div>
         </div>
         <br />
-    <div id="intro"><h2>农场信息<br/></h2>
-        渠道服装备农场25/月，玛娜农场40/月（含装备65/月），有意联系2332483996<br/><br/>
-        装备农场位置：6<br/>
-        玛娜农场位置：2<br/><br/>
-        已在农场成员输入本人的QQ号与游戏内13位id（可只输入后四位）。 <br/>
-        点击"移除成员"可踢出自己，点击"清理位置"可清除误加入的账号，点击"显示工会"查询本人所在的农场。<br/>
-    </div>
-    <br> QQ <input type="text" name="qq" id="qq"></br>
-    <br> ID <input type="text" name="id" id="id"></br>
-    <div id="myDiv"></div>
-    <p><button id="b01" type="button">移除成员</button></p>
-    <p><button id="b02" type="button">清理位置</button></p>
-    <p><button id="b03" type="button">显示工会</button></p>
-    <script>
-        $(function () {
-            $("#b01").click(function () {
-                $.ajax({
-                    url: "remove_user",
-                    type: "POST",
-                    dataType: "text",
-                    data: {
-                        qq: $("#qq").val(),
-                        id: $("#id").val(),
-                        type: "remove"
-                    },
-                    success: function (data) {
-                        $("#myDiv").html(data);
-                    }
-                })
-            });
-            $("#b02").click(function () {
-                $.ajax({
-                    url: "remove_user",
-                    type: "POST",
-                    dataType: "text",
-                    data: {
-                        qq: $("#qq").val(),
-                        id: $("#id").val(),
-                        type: "clean"
-                    },
-                    success: function (data) {
-                        $("#myDiv").html(data);
-                    }
-                })
-            });
-            $("#b03").click(function () {
-                $.ajax({
-                    url: "remove_user",
-                    type: "POST",
-                    dataType: "text",
-                    data: {
-                        qq: $("#qq").val(),
-                        id: $("#id").val(),
-                        type: "clan"
-                    },
-                    success: function (data) {
-                        $("#myDiv").html(data);
-                    }
-                })
+        <div class="ui container" id="main">
 
-            });
-        })
-    </script>
-    <a href="http://api.120224.xyz/static/ali.jpg"><span>显示付款码</span></a>
-</div>
+            <h2 class="ui dividing header">农场信息</h2>
+            <div class="ui fluid container">
+
+                <body>
+                    渠道服装备农场25/月，玛娜农场40/月（含装备65/月），有意联系2332483996<br /><br />
+                    装备农场位置：6<br />
+                    玛娜农场位置：2<br /><br />
+                    已在农场成员输入本人的QQ号与游戏内13位id（可只输入后四位）。 <br />
+                    点击"移除成员"可踢出自己，点击"清理位置"可清除误加入的账号，点击"显示工会"查询本人所在的农场。<br /><br />
+                </body>
+            </div>
+            <div class="ui grid">
+                <div class="eight wide column">
+                    <div class="ui small focus input">
+                        <input type="text" id="qq" placeholder="请输入QQ号">
+                    </div>
+                    <div class="ui small focus input">
+                        <input type="text" id="id" placeholder="请输入游戏内13位id">
+                    </div>
+                </div>
+
+            </div>
+            <div class="ui grid">
+                <div class="eight wide column">
+                    <button class="ui button" id="b01">移除成员</button>
+                    <button class="ui button" id="b02">清理位置</button>
+                    <button class="ui button" id="b03">显示工会</button>
+                </div>
+            </div>
+
+            <div class="ui container">
+                <div id="myDiv"><br /></div><br />
+                <a href="http://api.120224.xyz/static/ali.jpg"><span>显示付款码</span></a>
+            </div>
+
+
+        </div>
+
+        <script>
+            $(function () {
+                $("#b01").click(function () {
+                    $.ajax({
+                        url: "remove_user",
+                        type: "POST",
+                        dataType: "text",
+                        data: {
+                            qq: $("#qq").val(),
+                            id: $("#id").val(),
+                            type: "remove"
+                        },
+                        success: function (data) {
+                            $("#myDiv").html(data);
+                        }
+                    })
+                });
+                $("#b02").click(function () {
+                    $.ajax({
+                        url: "remove_user",
+                        type: "POST",
+                        dataType: "text",
+                        data: {
+                            qq: $("#qq").val(),
+                            id: $("#id").val(),
+                            type: "clean"
+                        },
+                        success: function (data) {
+                            $("#myDiv").html(data);
+                        }
+                    })
+                });
+                $("#b03").click(function () {
+                    $.ajax({
+                        url: "remove_user",
+                        type: "POST",
+                        dataType: "text",
+                        data: {
+                            qq: $("#qq").val(),
+                            id: $("#id").val(),
+                            type: "clan"
+                        },
+                        success: function (data) {
+                            $("#myDiv").html(data);
+                        }
+                    })
+
+                });
+            })
+        </script>
+    </div>
 </body>
 
 </html>
