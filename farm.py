@@ -17,9 +17,9 @@ def remove_other(clan_id, all_user=False):
     if not all_user:
         for user_info in total["users"].values():
             user_list.append(user_info["vid"])
+    farm_account = total["account"]
     for clan in total["clan"]:
         if clan["clan_id"] == clan_id:
-            farm_account = clan["account"]
             client = PCRClient(clan["owner"])
             client.login(clan["uid"], total["access_key"])
             clan_info = client.callapi('clan/others_info', {'clan_id': clan_id})
