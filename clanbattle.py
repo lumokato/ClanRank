@@ -114,7 +114,7 @@ def stage_data(final=0):
     df.columns = ['rank', 'clan_name', 'leader_name', 'member_num', 'damage', 'lap', 'boss_id', 'remain', 'grade_rank']
     end_time = datetime.now()
     filename = str(end_time.strftime("%Y%m%d%H")) + str(int(int(end_time.strftime("%M"))/30)*30).zfill(2)
-    # df.to_csv('qd/1/'+filename+'.csv')
+    df.to_csv('qd/1/'+filename+'.csv')
     print(end_time-start_time)
 
     async def add_score_list(sem, page):
@@ -173,4 +173,4 @@ def stage_data(final=0):
 
 
 if __name__ == '__main__':
-    stage_data(0)
+    stage_data(1)
