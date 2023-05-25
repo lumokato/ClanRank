@@ -139,7 +139,7 @@ def time_battle_bilibili(nowtime=datetime.datetime.now()):
                 item['start'], r"%Y/%m/%d %H:%M")
             end_time = datetime.datetime.strptime(
                 item['end'], r"%Y/%m/%d %H:%M")
-            if nowtime < end_time and nowtime - start_time < datetime.timedelta(30) and '团队战' in item['title']:
+            if nowtime < end_time and nowtime - start_time < datetime.timedelta(30) and '期' in item['title'] and '团队战' in item['title']:
                 return start_time, end_time
     return False
 
