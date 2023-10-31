@@ -20,7 +20,7 @@ app.jinja_env.comment_end_string = '#)'  # 修改注释结束符号
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('farm.html')
+    return render_template('index.html')
 
 
 @app.route('/farm', methods=['GET', 'POST'])
