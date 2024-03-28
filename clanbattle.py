@@ -105,7 +105,7 @@ def stage_data(final=0):
         try:
             temp = App.get_page_data(page)
             for status in temp:
-                save_data.append([status['rank'], status['clan_name'], status['leader_name'], status['member_num'], status['damage'], status['lap'], status['boss_id'], status['remain'], status['grade_rank']])
+                save_data.append([status['rank'], status['clan_name'].replace('\r', ''), status['leader_name'].replace('\r', ''), status['member_num'], status['damage'], status['lap'], status['boss_id'], status['remain'], status['grade_rank']])
             if not temp:
                 break
         except Exception:
