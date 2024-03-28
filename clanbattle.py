@@ -92,7 +92,7 @@ class ClanBattle:
         lap, boss_id, remaining = boss_status(status['damage'])
 
         if long_info:
-            return '第{}名：{}，会长：{}，成员数：{}/30，分数：{}，当前进度：{}周目{}王，剩余血量：{}/{}，上期排名：{}'.format(status['rank'], status['clan_name'], status['leader_name'], status['member_num'], status['damage'], lap, boss_id, remaining, BOSS_LIFE_LIST[boss_id - 1], status['grade_rank'])
+            return '第{}名：{}，会长：{}，成员数：{}/30，分数：{}，当前进度：{}周目{}王，剩余血量：{}/{}，上期排名：{}'.format(status['rank'], status['clan_name'].replace('\r', ''), status['leader_name'].replace('\r', ''), status['member_num'], status['damage'], lap, boss_id, remaining, BOSS_LIFE_LIST[boss_id - 1], status['grade_rank'])
         else:
             return '第{}名：{}，分数：{}，当前进度：{}周目{}王，剩余血量{}/{}'.format(status['rank'], status['clan_name'], status['damage'], lap, boss_id, remaining, BOSS_LIFE_LIST[boss_id - 1])
 
