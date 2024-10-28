@@ -152,24 +152,24 @@ def stage_data(final=0):
             else:
                 # print('add0')
                 score_list.extend([score_list[-1] if score_list else 0]*100)
+    # b服数据对比
+    # try:
+    #     # loop = asyncio.get_event_loop()
+    #     loop = asyncio.new_event_loop()
+    #     asyncio.set_event_loop(loop)
+    #     loop.run_until_complete(score_main())
 
-    try:
-        # loop = asyncio.get_event_loop()
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop.run_until_complete(score_main())
+    #     qd_score_list = df['damage'].to_list()
+    #     rank_list = []
+    #     for score in qd_score_list:
+    #         rank_list.append(bilicompare.binarySearch(score_list, 0, len(score_list)-1, score))
 
-        qd_score_list = df['damage'].to_list()
-        rank_list = []
-        for score in qd_score_list:
-            rank_list.append(bilicompare.binarySearch(score_list, 0, len(score_list)-1, score))
-
-        df.insert(loc=len(df.columns), column='bili_rank', value=rank_list)
-    except Exception:
-        time.sleep(1)
-    df.to_csv('qd/1/'+filename+'.csv')
-    bili_time = datetime.now()
-    print(end_time-start_time, bili_time-end_time)
+    #     df.insert(loc=len(df.columns), column='bili_rank', value=rank_list)
+    # except Exception:
+    #     time.sleep(1)
+    # df.to_csv('qd/1/'+filename+'.csv')
+    # bili_time = datetime.now()
+    # print(end_time-start_time, bili_time-end_time)
 
 
 if __name__ == '__main__':
