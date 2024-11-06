@@ -63,53 +63,32 @@ def remove_user(clan_id, remove_id):
                 return str(remove_id)+'已移出工会'
 
 
-def user_clear(qq, vid, clear_type):
+def user_clear(clanid, passwd, clear_type):
     req_time = time.time()
     user_type = 'none'
-    for user_index in total["users"].keys():
-        if str(total["users"][user_index]["qq"]) == qq:
-            find_index = user_index
-            viewer_id = total["users"][user_index]["vid"]
-            join_clan = total["users"][user_index]["join_clan"]
-            if str(viewer_id)[-4:] == vid or str(viewer_id) == vid:
-                user_type = 'user'
-            if isinstance(total["users"][user_index]["qq"], str):
-                user_type = 'admin'
-    msg = "输入错误"
-    if user_type == 'user' and clear_type == 'clean':
-        if int(req_time) - int(total["users"][find_index]["last_clean_time"]) > 1800:
-            # msg = '调用remove_other()'+str(join_clan)
-            msg = remove_other(join_clan)
-            total["users"][find_index]["last_clean_time"] = req_time
-            save_total()
-        else:
-            msg = '操作间隔小于30分钟'
-    elif user_type == 'user' and clear_type == 'remove':
-        if int(req_time) - int(total["users"][find_index]["last_clear_time"]) > 1800:
-            # msg = '调用remove_user()' + str(join_clan)+str(viewer_id)
-            msg = remove_user(join_clan, viewer_id)
-            total["users"][find_index]["last_clear_time"] = req_time
-            save_total()
-        else:
-            msg = '操作间隔小于30分钟'
-    elif user_type == 'admin' and clear_type == 'clean':
-        for clan in total["clan"]:
-            if str(clan["clan_id"]) == vid:
-                # msg = '调用remove_other()' + vid
-                msg = remove_other(clan["clan_id"], True)
-                total["users"]["0"]["last_clear_time"] = req_time
-                save_total()
-    elif user_type == 'admin' and clear_type == 'remove':
-        for user_index in total["users"].keys():
-            if str(total["users"][user_index]["vid"]) == vid:
-                join_clan = total["users"][user_index]["join_clan"]
-                # msg = '调用remove_user()' + str(join_clan)+str(vid)
-                msg = remove_user(join_clan, vid)
-                total["users"]["0"]["last_clean_time"] = req_time
-                save_total()
-    elif user_type != 'none' and clear_type == 'clan':
-        for clan in total["clan"]:
-            if clan["clan_id"] == join_clan:
-                msg = '工会名：' + clan["name"]
+    if passwd != total["passwd"]:
+        return "密码错误"
 
+    clan_list = []
+    for clan in total["clan"]:
+        clan_list.append[clan["clan_id"]]
+    
+    remove_list = []
+    if not clanid.isdigit():
+        return "id非数字"
+    elif not int(clanid):
+        remove_list = clan_list
+    elif int(clanid) in clan_list:
+        remove_list.append(int(clanid))
+    else:
+        return "工会id不在可处理列表内"
+    
+    msg = ""
+
+    # if clear_type == 'clean':
+    #     for join_clan in remove_list:
+    #         msg += remove_other(join_clan)
+    # elif clear_type == 'remove':
+    #     for join_clan in remove_list:
+    #         msg += remove_other(join_clan, True)
     return msg

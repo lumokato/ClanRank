@@ -30,10 +30,10 @@ def index_farm():
 
 @app.route('/remove_user', methods=['POST'])#路由
 def test_post():
-    qq = request.form.get("qq")
-    vid = request.form.get("id")
+    clanid = request.form.get("clanid")
+    passwd = request.form.get("passwd")
     clear_type = request.form.get("type")
-    msg = farm.user_clear(qq, vid, clear_type)
+    msg = farm.user_clear(clanid, passwd, clear_type)
     return msg
 
 
