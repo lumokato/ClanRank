@@ -1,10 +1,14 @@
 from pcrclient import PCRClient
-import config as cg
+from json import load
 import pandas as pd
 from datetime import datetime
-import time
-import bilicompare
-import asyncio
+
+with open('account.json', encoding='utf-8') as fp:
+    total = load(fp)
+
+# import time
+# import bilicompare
+# import asyncio
 
 BOSS_LIFE_LIST = [[6000000, 8000000, 10000000, 12000000, 15000000],
                   [6000000, 8000000, 10000000, 12000000, 15000000],
@@ -99,7 +103,7 @@ class ClanBattle:
 
 def stage_data(final=0):
     start_time = datetime.now()
-    App = ClanBattle(cg.pvid, cg.puid, cg.access_key)
+    App = ClanBattle(total["clan_account"]["vid"], total["clan_account"]["uid"], total["access_key"])
     save_data = []
     for page in range(30 if not final else 300):
         try:
@@ -117,41 +121,41 @@ def stage_data(final=0):
     df.to_csv('qd/1/'+filename+'.csv')
     print(end_time-start_time)
 
-    async def add_score_list(sem, page):
-        async with sem:
-            score_list = []
-            retry = 0
-            while retry < 4:
-                # print('查询'+str(page))
-                page_data = await bilicompare.bilipage(page)
-                if not page_data:
-                    retry += 1
-                    # time.sleep(1)
-                    # continue
-                else:
-                    try:
-                        for clan in page_data:
-                            score_list.append(clan['damage'])
-                        return score_list
-                    except Exception:
-                        retry += 1
-                        # time.sleep(1)
-                        # continue
-    score_list = []
+    # async def add_score_list(sem, page):
+    #     async with sem:
+    #         score_list = []
+    #         retry = 0
+    #         while retry < 4:
+    #             # print('查询'+str(page))
+    #             page_data = await bilicompare.bilipage(page)
+    #             if not page_data:
+    #                 retry += 1
+    #                 # time.sleep(1)
+    #                 # continue
+    #             else:
+    #                 try:
+    #                     for clan in page_data:
+    #                         score_list.append(clan['damage'])
+    #                     return score_list
+    #                 except Exception:
+    #                     retry += 1
+    #                     # time.sleep(1)
+    #                     # continue
+    # score_list = []
 
-    async def score_main():
-        sem = asyncio.Semaphore(8)
-        tasks = []
-        for page in range(55 if not final else 210):
-            task = asyncio.create_task(add_score_list(sem, page))
-            tasks.append(task)
-        await asyncio.gather(*tasks)
-        for i in tasks:
-            if i._result:
-                score_list.extend(i._result)
-            else:
-                # print('add0')
-                score_list.extend([score_list[-1] if score_list else 0]*100)
+    # async def score_main():
+    #     sem = asyncio.Semaphore(8)
+    #     tasks = []
+    #     for page in range(55 if not final else 210):
+    #         task = asyncio.create_task(add_score_list(sem, page))
+    #         tasks.append(task)
+    #     await asyncio.gather(*tasks)
+    #     for i in tasks:
+    #         if i._result:
+    #             score_list.extend(i._result)
+    #         else:
+    #             # print('add0')
+    #             score_list.extend([score_list[-1] if score_list else 0]*100)
     # b服数据对比
     # try:
     #     # loop = asyncio.get_event_loop()
