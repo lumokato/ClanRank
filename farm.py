@@ -15,8 +15,7 @@ def save_total():
 def remove_other(clan_id, all_user=False):
     user_list = []
     if not all_user:
-        for user_info in total["users"].values():
-            user_list.append(user_info["vid"])
+        user_list = total["users"]
     farm_account = total["account"]
     for clan in total["clan"]:
         if clan["clan_id"] == clan_id:
@@ -35,7 +34,7 @@ def remove_other(clan_id, all_user=False):
                 clean_info = client.callapi('clan/remove', {'clan_id': clan_id, 'remove_viewer_id': clean_id})
                 if "server_error" not in clean_info:
                     clean_count += 1
-            return '工会'+clan['name']+'已清理'+str(clean_count)+'个位置'
+            return '工会'+str(clan['clan_id'])+'已清理'+str(clean_count)+'个位置'
 
 
 def remove_user(clan_id, remove_id):
@@ -64,14 +63,13 @@ def remove_user(clan_id, remove_id):
 
 
 def user_clear(clanid, passwd, clear_type):
-    req_time = time.time()
-    user_type = 'none'
     if passwd != total["passwd"]:
         return "密码错误"
 
     clan_list = []
+
     for clan in total["clan"]:
-        clan_list.append[clan["clan_id"]]
+        clan_list.append(clan["clan_id"])
     
     remove_list = []
     if not clanid.isdigit():
@@ -85,10 +83,10 @@ def user_clear(clanid, passwd, clear_type):
     
     msg = ""
 
-    # if clear_type == 'clean':
-    #     for join_clan in remove_list:
-    #         msg += remove_other(join_clan)
-    # elif clear_type == 'remove':
-    #     for join_clan in remove_list:
-    #         msg += remove_other(join_clan, True)
+    if clear_type == 'clean':
+        for join_clan in remove_list:
+            msg += remove_other(join_clan)
+    elif clear_type == 'remove':
+        for join_clan in remove_list:
+            msg += remove_other(join_clan, True)
     return msg
