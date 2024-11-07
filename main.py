@@ -6,6 +6,9 @@ import datetime
 import os
 import shutil
 import calendar
+import farm
+from json import load
+
 root = logging.getLogger()
 root.setLevel(logging.INFO)
 
@@ -27,6 +30,12 @@ def move_data():
         os.makedirs(dir+'/qd/1')
 
 
+def user_remove(clear_type):
+    with open('account.json', encoding='utf-8') as fp:
+        total = load(fp)
+    farm.user_clear(0, total["passwd"], clear_type)
+
+
 if __name__ == '__main__':
     scheduler = BlockingScheduler(timezone="Asia/Shanghai")
     # panel里设定每月15重启main.py
@@ -36,6 +45,8 @@ if __name__ == '__main__':
     end_time = datetime.datetime(today.year, today.month, monthdays[1], 0, 0)
     if bilievent.time_battle_bilibili(datetime.datetime.now()):
         start_time, end_time = bilievent.time_battle_bilibili(datetime.datetime.now())
+    scheduler.add_job(user_remove, 'date', run_date=start_time - datetime.timedelta(hours=19), args=['remove'])
+    scheduler.add_job(user_remove, 'cron', day='last', hour='0, 2, 6, 9', minute='1', args=['clean'])
     scheduler.add_job(move_data, 'date', run_date=start_time-datetime.timedelta(hours=16))
     scheduler.add_job(clanbattle.stage_data, 'interval', minutes=30, start_date=start_time+datetime.timedelta(minutes=2), end_date=end_time+datetime.timedelta(minutes=2))
     scheduler.add_job(clanbattle.stage_data, 'date', run_date=end_time+datetime.timedelta(days=7.64), args=[1])
