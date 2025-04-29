@@ -33,7 +33,7 @@ def boss_status(score):
         if boss_id > 4:
             boss_id = 0
             lap += 1
-            if ptr <= 3:
+            if ptr <= 1:
                 if lap >= LAP_UPGRADE[ptr]:
                     ptr += 1
 
