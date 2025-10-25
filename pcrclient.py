@@ -38,7 +38,7 @@ def unpack(decrypted_packet):
 def decrypt(encrypted):
     mode = AES.MODE_CBC
     ss2 = base64.b64decode(encrypted)
-    vi = b'ha4nBYA2APUD6Uv1'
+    vi = b'7Fk9Lm3Np8Qr4Sv2'
     key = ss2[-32:]
     ss2 = ss2[:-32]
     cryptor = AES.new(key, mode, vi)
@@ -53,7 +53,7 @@ def decrypt(encrypted):
 
 def encrypt_nobase64(decrypted, key):
     mode = AES.MODE_CBC
-    vi = b'ha4nBYA2APUD6Uv1'
+    vi = b'7Fk9Lm3Np8Qr4Sv2'
     cryptor = AES.new(key, mode, vi)
     ss1 = msgpack.packb(decrypted)
     ss1 = padding_txt(ss1)
@@ -63,7 +63,7 @@ def encrypt_nobase64(decrypted, key):
 
 def encrypt(decrypted, key):
     mode = AES.MODE_CBC
-    vi = b'ha4nBYA2APUD6Uv1'
+    vi = b'7Fk9Lm3Np8Qr4Sv2'
     cryptor = AES.new(key, mode, vi)
     ss1 = padding_txt(decrypted.encode())
     plain_text = cryptor.encrypt(ss1)
