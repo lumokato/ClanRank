@@ -13,3 +13,19 @@ demo page : https://kyaru.infedg.xyz/tw
 渠道服数据获取方式已开源，在项目 https://github.com/infinityedge01/qqbot2/tree/main/hoshino/modules/Luna 内，是 nonebot 插件的形式。
 
 Traditional Chinese Translated By [@TragicLifeHu](https://github.com/TragicLifeHu).
+
+## 手动备份数据
+
+如果错过了自动备份时间（会战开始前一天），可以使用以下命令手动触发数据迁移：
+
+```bash
+python manual_backup.py
+```
+
+## 手动运行数据抓取
+
+如果需要手动触发一次数据抓取（非最终结算），可以使用以下命令：
+
+```bash
+python manual_stage_data.py
+```

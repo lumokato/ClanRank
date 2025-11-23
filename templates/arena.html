@@ -1,74 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>分场查询</title>
-    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
-    <script src="https://fastly.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-    <script src="/static/index.js?v=0.1"></script>
-    <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-<body style="padding-top: 50px;">
-    <div id="PCRClanBattleSearcher">
-        <div class="ui borderless top fixed menu">
-            <div class="ui container menu_container">
-                <a class="item" href="https://clan.120224.xyz"> <img src="/static/112431.ico">
-                    &#12288;hego工具箱</a>
-                <div class="right menu">
-                    <a class="item current_rank" href="https://clan.120224.xyz" :class="{'active' : is_current}"
-                        @click="changeToCurrent()"><i aria-hidden="true" class="home icon"></i>当期会战</a>
-                    <a class="item history_rank" href="https://clan.120224.xyz" :class="{'active' : is_history}"
-                        @click="changeToHistory()"><i aria-hidden="true" class="calendar icon"></i>历史会战</a>
-                    <a class="item" href="https://clan.120224.xyz/arena"><i aria-hidden="true"
-                            class="search icon"></i>分场查询</a>
-                    <div class="ui pointing dropdown link item">
-                        <i aria-hidden="true" class="comment icon"></i>意见反馈
-                        <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <a class="item" href="http://wpa.qq.com/msgrd?v=3&uin=2332483996&site=qq&menu=yes"
-                                target="_blank">QQ</a>
-                        </div>
-                    </div>
-                </div>
+<body>
+    <nav class="navbar">
+        <div class="container navbar-container"
+            style="margin: 0; max-width: none; display: flex; justify-content: space-between;">
+            <a class="navbar-brand" href="/">
+                <img src="/static/128431.ico" alt="Logo" style="height: 30px;">
+                PCR 渠道服工具箱
+            </a>
+            <div class="navbar-menu">
+                <a class="navbar-item" href="/">
+                    当期会战
+                </a>
+                <a class="navbar-item" href="/">
+                    历史会战
+                </a>
+                <a class="navbar-item active" href="/arena">
+                    分场查询
+                </a>
             </div>
         </div>
+    </nav>
 
-        <div class="ui container" id="main">
-            <div class="ui fluid container">
-                <h3><br/>请输入游戏内13位id<br/><br/></h3>
+    <div class="container fade-in">
+        <div class="card">
+            <div class="card-header">
+                分场查询
             </div>
-            <div class="ui focus input">
-                <input type="number" id="id" placeholder="查询ID">
-                <button class="ui button" id="b01">查询</button>
+            <div class="form-group">
+                <label>请输入游戏内13位ID</label>
+                <input type="number" id="id" class="form-control" placeholder="查询ID">
             </div>
-            <div class="ui container">
-                <h3>
-                    <div id="myDiv"></div>
-                </h3>
-            </div>
+            <button class="btn" id="b01">查询</button>
         </div>
 
-        <script>
-            $(function () {
-                $("#b01").click(function () {
-                    $.ajax({
-                        url: "arena_search",
-                        type: "POST",
-                        dataType: "text",
-                        data: {
-                            id: $("#id").val()
-                        },
-                        success: function (data) {
-                            $("#myDiv").html(data);
-                        }
-                    })
-                });
-            })
-        </script>
+        <div class="card" id="resultCard" style="display: none;">
+            <div id="myDiv"></div>
+        </div>
     </div>
+
+    <script>
+        $(function () {
+            $("#b01").click(function () {
+                var btn = $(this);
+                btn.prop('disabled', true).text('查询中...');
+                $.ajax({
+                    url: "arena_search",
+                    type: "POST",
+                    dataType: "text",
+                    data: {
+                        id: $("#id").val()
+                    },
+                    success: function (data) {
+                        $("#resultCard").show();
+                        $("#myDiv").html(data);
+                        btn.prop('disabled', false).text('查询');
+                    },
+                    error: function () {
+                        $("#resultCard").show();
+                        $("#myDiv").html("查询失败，请稍后重试");
+                        btn.prop('disabled', false).text('查询');
+                    }
+                })
+            });
+        })
+    </script>
 </body>
 
 </html>

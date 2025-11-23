@@ -1,23 +1,35 @@
-from pcrclient import PCRClient
+from .pcrclient import PCRClient
 from json import load, dump
 import time
+import os
 
-with open('account.json', encoding='utf-8') as fp:
-    total = load(fp)
-
+# Load account.json from root
+def get_account_data():
+    if os.path.exists('account.json'):
+        with open('account.json', encoding='utf-8') as fp:
+            return load(fp)
+    return {}
 
 class ArenaSearch:
     def __init__(self):
-        self.account = total["arena_account"]
-        self.client = PCRClient(self.account["vid"])
-        self.client.login(self.account["uid"], total["access_key"])
+        self.total = get_account_data()
+        if not self.total:
+            print("Warning: account.json not found or empty.")
+            return
+        self.account = self.total.get("arena_account", {})
+        if self.account:
+            self.client = PCRClient(self.account["vid"])
+            self.client.login(self.account["uid"], self.total["access_key"])
 
     def user_search(self, user_id):
+        if not self.total:
+             return '配置文件缺失'
+        
         if len(str(user_id)) != 13:
             return '请输入13位数字'
         req = self.client.callapi('profile/get_profile', {'target_viewer_id': int(user_id)})
         if "server_error" in req:
-            self.client.login(self.account["uid"], total["access_key"])
+            self.client.login(self.account["uid"], self.total["access_key"])
             with open('reload.log', 'a') as f:
                 f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+'  reload')
             print('重新登录')

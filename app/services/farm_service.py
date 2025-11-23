@@ -1,23 +1,25 @@
-from pcrclient import PCRClient
+from .pcrclient import PCRClient
 from json import load, dump
 import time
+import os
 
-with open('account.json', encoding='utf-8') as fp:
-    total = load(fp)
+def get_account_data():
+    if os.path.exists('account.json'):
+        with open('account.json', encoding='utf-8') as fp:
+            return load(fp)
+    return {}
 
-
-def save_total():
-    global total
+def save_total(total):
     with open('account.json', 'w', encoding='utf-8') as fp:
         dump(total, fp, indent=4, ensure_ascii=False)
 
-
 def remove_other(clan_id, all_user=False):
+    total = get_account_data()
     user_list = []
     if not all_user:
-        user_list = total["users"]
-    farm_account = total["account"]
-    for clan in total["clan"]:
+        user_list = total.get("users", [])
+    farm_account = total.get("account", [])
+    for clan in total.get("clan", []):
         if clan["clan_id"] == clan_id:
             client = PCRClient(clan["owner"])
             client.login(clan["uid"], total["access_key"])
@@ -35,15 +37,16 @@ def remove_other(clan_id, all_user=False):
                 if "server_error" not in clean_info:
                     clean_count += 1
             return '工会'+str(clan['clan_id'])+'已清理'+str(clean_count)+'个位置'
-
+    return '未找到工会'
 
 def remove_user(clan_id, remove_id):
+    total = get_account_data()
     if isinstance(remove_id, str):
         remove_id = int(remove_id)
     user_list = []
-    for user_info in total["users"].values():
+    for user_info in total.get("users", {}).values():
         user_list.append(user_info["vid"])
-    for clan in total["clan"]:
+    for clan in total.get("clan", []):
         if clan["clan_id"] == clan_id:
             client = PCRClient(clan["owner"])
             client.login(clan["uid"], total["access_key"])
@@ -60,15 +63,16 @@ def remove_user(clan_id, remove_id):
             clean_info = client.callapi('clan/remove', {'clan_id': clan_id, 'remove_viewer_id': clean_id})
             if "server_error" not in clean_info:
                 return str(remove_id)+'已移出工会'
-
+    return '未找到工会'
 
 def user_clear(clanid, passwd, clear_type):
-    if passwd != total["passwd"]:
+    total = get_account_data()
+    if passwd != total.get("passwd"):
         return "密码错误"
 
     clan_list = []
 
-    for clan in total["clan"]:
+    for clan in total.get("clan", []):
         clan_list.append(clan["clan_id"])
     
     remove_list = []

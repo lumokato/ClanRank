@@ -4,7 +4,6 @@ import re
 import ast
 from html.parser import HTMLParser
 
-
 keyword_list = [
     'year',
     'month',
@@ -142,7 +141,3 @@ def time_battle_bilibili(nowtime=datetime.datetime.now()):
             if nowtime < end_time and nowtime - start_time < datetime.timedelta(30) and '期' in item['title'] and '团队战' in item['title']:
                 return start_time, end_time
     return False
-
-
-if __name__ == '__main__':
-    print(time_battle_bilibili(datetime.datetime.now()))
