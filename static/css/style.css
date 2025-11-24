@@ -262,51 +262,29 @@ tr:hover {
         grid-template-columns: 1fr !important;
     }
 
-    .form-group[style*="grid-column: span 2"] {
-        grid-column: span 1 !important;
+    .grid-compact {
+        display: grid;
+        gap: 0.8rem;
+        align-items: end;
     }
 
-    /* Fix table width on mobile */
-    th,
-    td {
-        padding: 0.5rem;
-        font-size: 0.85rem;
-        white-space: nowrap;
+    /* Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    /* Allow clan name to wrap if needed, or keep nowrap with scroll */
-    td:nth-child(2) {
-        white-space: normal;
-        min-width: 120px;
+    .fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
     }
 
-    .container {
-        margin-top: 180px;
-        /* Increase margin to account for stacked navbar */
-    }
-}
-
-.grid-compact {
-    display: grid;
-    gap: 0.8rem;
-    align-items: end;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.fade-in {
-    animation: fadeIn 0.5s ease-out forwards;
 }
 
 /* Desktop Table Column Widths */
