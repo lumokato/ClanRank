@@ -223,6 +223,201 @@ tr:hover {
 
 .layout-grid {
     display: grid;
+    --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    --input-bg: rgba(0, 0, 0, 0.2);
+    --input-border: rgba(255, 255, 255, 0.2);
+    --navbar-bg: rgba(26, 26, 46, 0.8);
+    --table-border: rgba(255, 255, 255, 0.1);
+    --hover-bg: rgba(255, 255, 255, 0.05);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+body.dark-mode {
+    background-image: radial-gradient(circle at 50% 50%, #2a2a4e 0%, #1a1a2e 100%);
+}
+
+.navbar {
+    background: var(--navbar-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: var(--glass-border);
+    padding: 0.8rem 2rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.navbar-menu {
+    display: flex;
+    gap: 2rem;
+    flex-grow: 1;
+    justify-content: center;
+    padding-left: 10%;
+}
+
+.navbar-item {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    cursor: pointer;
+    font-size: 1.05rem;
+}
+
+.navbar-item:hover,
+.navbar-item.active {
+    color: var(--primary-color);
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    transition: transform 0.3s;
+}
+
+.theme-toggle:hover {
+    transform: rotate(15deg);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 80px auto 2rem;
+    padding: 0 1rem;
+}
+
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    border: var(--glass-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--glass-shadow);
+    margin-bottom: 1.5rem;
+    transition: background var(--transition-speed), border-color var(--transition-speed);
+}
+
+.card-header {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--table-border);
+    padding-bottom: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 8px;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--text-color);
+    font-size: 0.95rem;
+    transition: border-color 0.3s, background var(--transition-speed);
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    white-space: nowrap;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 117, 140, 0.4);
+}
+
+.btn-secondary {
+    background: var(--input-bg);
+    color: var(--text-color);
+    border: 1px solid var(--input-border);
+}
+
+.btn-secondary:hover {
+    background: var(--hover-bg);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+th,
+td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid var(--table-border);
+}
+
+th {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+tr:hover {
+    background: var(--hover-bg);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.layout-grid {
+    display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 1.5rem;
     margin-bottom: 1.5rem;
@@ -231,6 +426,49 @@ tr:hover {
 @media (max-width: 768px) {
     .layout-grid {
         grid-template-columns: 1fr;
+    }
+
+    .navbar-container {
+        grid-template-columns: 1fr !important;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .navbar-brand {
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .navbar-menu {
+        justify-content: center !important;
+        padding-left: 0 !important;
+        gap: 1rem !important;
+        flex-wrap: wrap;
+    }
+
+    .navbar-item {
+        font-size: 0.9rem;
+    }
+
+    .grid-compact {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .form-group[style*="grid-column: span 2"] {
+        grid-column: span 1 !important;
+    }
+
+    /* Fix table width on mobile */
+    th, td {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+    
+    /* Allow clan name to wrap if needed, or keep nowrap with scroll */
+    td:nth-child(2) {
+        white-space: normal;
+        min-width: 120px;
     }
 }
 
