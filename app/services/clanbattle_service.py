@@ -103,14 +103,24 @@ def stage_data(final=0):
     App = ClanBattle(total["clan_account"]["vid"], total["clan_account"]["uid"], total["access_key"])
     save_data = []
     for page in range(30 if not final else 300):
-        try:
-            temp = App.get_page_data(page)
-            for status in temp:
-                save_data.append([status['rank'], status['clan_name'].replace('\r', ''), status['leader_name'].replace('\r', ''), status['member_num'], status['damage'], status['lap'], status['boss_id'], status['remain'], status['grade_rank']])
-            if not temp:
+        temp = None
+        start_wait = time.time()
+        while True:
+            try:
+                temp = App.get_page_data(page)
                 break
-        except Exception:
-            continue
+            except Exception as e:
+                if time.time() - start_wait > 300:
+                    print(f"Page {page} fetch timed out after 300s. Aborting.")
+                    break
+                print(f"Page {page} fetch failed, retrying in 10s... {e}")
+                time.sleep(10)
+        
+        if not temp:
+            break
+
+        for status in temp:
+            save_data.append([status['rank'], status['clan_name'].replace('\r', ''), status['leader_name'].replace('\r', ''), status['member_num'], status['damage'], status['lap'], status['boss_id'], status['remain'], status['grade_rank']])
     df = pd.DataFrame(save_data)
     df.columns = ['rank', 'clan_name', 'leader_name', 'member_num', 'damage', 'lap', 'boss_id', 'remain', 'grade_rank']
     end_time = datetime.now()

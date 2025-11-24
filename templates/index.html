@@ -92,9 +92,9 @@
                             <tr>
                                 <th>排名</th>
                                 <th>公会名</th>
+                                <th>分数</th>
                                 <th>人数</th>
                                 <th>会长名</th>
-                                <th>分数</th>
                                 <th>参考周目</th>
                                 <th>上期</th>
                             </tr>
@@ -103,9 +103,9 @@
                             <tr v-for="(val, key) in state.showData" :key="key">
                                 <td>{{ val.rank }}</td>
                                 <td>{{ val.clan_name }}</td>
+                                <td>{{ val.damage }}</td>
                                 <td>{{ val.member_num }}</td>
                                 <td>{{ val.leader_name }}</td>
-                                <td>{{ val.damage }}</td>
                                 <td>{{ val.lap }}</td>
                                 <td>{{ val.grade_rank }}</td>
                             </tr>
