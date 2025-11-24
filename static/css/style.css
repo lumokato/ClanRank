@@ -290,36 +290,105 @@ tr:hover {
         grid-column: span 1 !important;
     }
 
+    .container {
+        margin-top: 220px;
+        /* Increased margin to prevent overlap */
+    }
+
+    /* Fix table width on mobile */
+    table {
+        table-layout: auto;
+    }
+
+    th,
+    td {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        overflow: visible;
+        text-overflow: clip;
+    }
+
+    /* Set min-width for columns to force horizontal scroll */
+    th:nth-child(1),
+    td:nth-child(1) {
+        min-width: 50px;
+    }
+
+    /* Rank */
+    th:nth-child(2),
+    td:nth-child(2) {
+        min-width: 150px;
+    }
+
+    /* Clan Name */
+    th:nth-child(3),
+    td:nth-child(3) {
+        min-width: 100px;
+    }
+
+    /* Score */
+    th:nth-child(4),
+    td:nth-child(4) {
+        min-width: 60px;
+    }
+
+    /* Members */
+    th:nth-child(5),
+    td:nth-child(5) {
+        min-width: 120px;
+    }
+
+    /* Leader */
+    th:nth-child(6),
+    td:nth-child(6) {
+        min-width: 80px;
+    }
+
+    /* Lap */
+    th:nth-child(7),
+    td:nth-child(7) {
+        min-width: 80px;
+    }
+
+    /* Previous */
 }
 
-/* 排名 */
-th:nth-child(2) {
-    width: 220px;
-}
+/* Desktop Table Column Widths */
+@media (min-width: 769px) {
+    th:nth-child(1) {
+        width: 80px;
+    }
 
-/* 公会名 */
-th:nth-child(3) {
-    width: 150px;
-}
+    /* 排名 */
+    th:nth-child(2) {
+        width: 220px;
+    }
 
-/* 分数 */
-th:nth-child(4) {
-    width: 80px;
-}
+    /* 公会名 */
+    th:nth-child(3) {
+        width: 150px;
+    }
 
-/* 人数 */
-th:nth-child(5) {
-    width: 220px;
-}
+    /* 分数 */
+    th:nth-child(4) {
+        width: 80px;
+    }
 
-/* 会长名 */
-th:nth-child(6) {
-    width: 100px;
-}
+    /* 人数 */
+    th:nth-child(5) {
+        width: 220px;
+    }
 
-/* 参考周目 */
-th:nth-child(7) {
-    width: 100px;
-}
+    /* 会长名 */
+    th:nth-child(6) {
+        width: 100px;
+    }
 
-/* 上期 */
+    /* 参考周目 */
+    th:nth-child(7) {
+        width: 100px;
+    }
+
+    /* 上期 */
+}
