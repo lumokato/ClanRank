@@ -231,6 +231,30 @@ tr:hover {
     margin-bottom: 1.5rem;
 }
 
+.grid-compact {
+    display: grid;
+    gap: 0.8rem;
+    align-items: end;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Mobile Responsive Styles */
 @media (max-width: 768px) {
     .layout-grid {
         grid-template-columns: 1fr;
@@ -262,29 +286,66 @@ tr:hover {
         grid-template-columns: 1fr !important;
     }
 
-    .grid-compact {
-        display: grid;
-        gap: 0.8rem;
-        align-items: end;
+    .form-group[style*="grid-column: span 2"] {
+        grid-column: span 1 !important;
     }
 
-    /* Animations */
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .container {
+        margin-top: 180px;
+        /* Increase margin to account for stacked navbar */
     }
 
-    .fade-in {
-        animation: fadeIn 0.5s ease-out forwards;
+    /* Fix table width on mobile */
+    th,
+    td {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+        white-space: nowrap;
     }
 
+    /* Set min-width for columns to force horizontal scroll */
+    th:nth-child(1),
+    td:nth-child(1) {
+        min-width: 50px;
+    }
+
+    /* Rank */
+    th:nth-child(2),
+    td:nth-child(2) {
+        min-width: 150px;
+    }
+
+    /* Clan Name */
+    th:nth-child(3),
+    td:nth-child(3) {
+        min-width: 100px;
+    }
+
+    /* Score */
+    th:nth-child(4),
+    td:nth-child(4) {
+        min-width: 60px;
+    }
+
+    /* Members */
+    th:nth-child(5),
+    td:nth-child(5) {
+        min-width: 120px;
+    }
+
+    /* Leader */
+    th:nth-child(6),
+    td:nth-child(6) {
+        min-width: 80px;
+    }
+
+    /* Lap */
+    th:nth-child(7),
+    td:nth-child(7) {
+        min-width: 80px;
+    }
+
+    /* Previous */
 }
 
 /* Desktop Table Column Widths */
