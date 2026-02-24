@@ -16,5 +16,5 @@ WORKDIR /
 
 EXPOSE 8000
 
-CMD ["python", "/app/app.py"]
+CMD ["python", "/app/main.py"]
 
