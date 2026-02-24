@@ -18,7 +18,6 @@
 services:
   app-clanrank:
     build: .
-    image: app-clanrank:latest
     container_name: app-clanrank
     restart: unless-stopped
     
