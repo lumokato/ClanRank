@@ -11,7 +11,7 @@
 #   - HOST_DATA_PATH:  宿主机数据挂载根目录
 #
 # 首次部署前，需在宿主机创建配置目录并放入配置文件:
-#   mkdir -p ${HOST_DATA_PATH}/clanrank/config
+#   mkdir -p ${HOST_DATA_PATH}/config
 #   # 将 account.json, config.json, version.txt 放入该目录
 # ==============================================================================
 
@@ -24,7 +24,7 @@ services:
     
     volumes:
       - ${HOST_DATA_PATH}/qd:/qd
-      - ${HOST_DATA_PATH}/clanrank/config:/app/config
+      - ${HOST_DATA_PATH}/config:/config
     
     # 网络设置
     networks:
