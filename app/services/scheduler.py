@@ -11,10 +11,12 @@ from . import bilievent_service
 
 logger = logging.getLogger(__name__)
 
+CONFIG_PATH = os.path.join('config', 'config.json')
+
 def load_config():
     try:
-        if os.path.exists('config.json'):
-            with open('config.json', 'r') as f:
+        if os.path.exists(CONFIG_PATH):
+            with open(CONFIG_PATH, 'r') as f:
                 return json.load(f)
         return None
     except Exception as e:

@@ -1,18 +1,18 @@
 # ==============================================================================
-# 项目: AutoPCR (GitOps 部署版)
+# 项目: ClanRank
 # ==============================================================================
 # 部署方式: 
-#   Portainer -> Stacks -> Add Stack -> Repository
-#   在此模式下，Portainer 会拉取代码并依据下方的 build: . 构建镜像
+#   服务器上 git clone 后 docker compose up -d --build
+#   或 Portainer -> Stacks -> Add Stack -> Repository (GitHub)
 #
-# 敏感配置 (需要在 Portainer 的 Environment variables 中填入):
+# 环境变量 (通过 .env 文件或 Portainer Environment variables 填入):
 #   - DOMAIN_NAME:     服务域名
 #   - NETWORK_NAME:    Traefik所在的网络名
 #   - HOST_DATA_PATH:  宿主机数据挂载根目录
 #
-# 端口说明:
-#   - 容器内部暴露: 13200
-#   - 外部访问: 通过 Traefik 代理，无需映射宿主机端口
+# 首次部署前，需在宿主机创建配置目录并放入配置文件:
+#   mkdir -p ${HOST_DATA_PATH}/clanrank/config
+#   # 将 account.json, config.json, version.txt 放入该目录
 # ==============================================================================
 
 services:
@@ -24,6 +24,7 @@ services:
     
     volumes:
       - ${HOST_DATA_PATH}/qd:/qd
+      - ${HOST_DATA_PATH}/clanrank/config:/app/config
     
     # 网络设置
     networks:

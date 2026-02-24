@@ -1,22 +1,20 @@
 FROM python:3.10.16-slim
 
-WORKDIR /app
-
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONPATH=/app
 
-COPY requirements.txt .
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r /app/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+COPY . /app/
 
-COPY . .
-
-# 安全: 非 root 用户运行
 RUN adduser --disabled-password --no-create-home appuser
 USER appuser
 
+WORKDIR /
+
 EXPOSE 8000
 
-CMD ["python", "app.py"]
+CMD ["python", "/app/app.py"]
 

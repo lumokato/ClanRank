@@ -12,22 +12,12 @@ import time
 from json import loads
 from os.path import dirname, join, exists
 
-# Adjusted to look for version.txt in the current directory (app/services) or root
-curpath = dirname(__file__)
-config = join(curpath, 'version.txt')
-# If not found, try root (assuming app/services/...)
-if not exists(config):
-    config = join(dirname(dirname(dirname(__file__))), 'version.txt')
+config = join('config', 'version.txt')
 
 version = "4.9.4"
 if exists(config):
     with open(config, encoding='utf-8') as fp:
         version = fp.read().strip()
-else:
-    # Fallback or create in current dir
-    config = join(curpath, 'version.txt')
-    with open(config, "w", encoding='utf-8') as fp:
-        print(version, file=fp)
 
 
 # 用于补全下面的text，上面两个网址就是用以下形式补全的

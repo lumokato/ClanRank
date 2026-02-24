@@ -6,7 +6,9 @@ qd/
 *.md
 *.txt
 !requirements.txt
+config/
 docker-compose.yaml
 Dockerfile
 .dockerignore
 .gitignore
+.env

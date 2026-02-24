@@ -3,14 +3,16 @@ from json import load, dump
 import time
 import os
 
+ACCOUNT_PATH = os.path.join('config', 'account.json')
+
 def get_account_data():
-    if os.path.exists('account.json'):
-        with open('account.json', encoding='utf-8') as fp:
+    if os.path.exists(ACCOUNT_PATH):
+        with open(ACCOUNT_PATH, encoding='utf-8') as fp:
             return load(fp)
     return {}
 
 def save_total(total):
-    with open('account.json', 'w', encoding='utf-8') as fp:
+    with open(ACCOUNT_PATH, 'w', encoding='utf-8') as fp:
         dump(total, fp, indent=4, ensure_ascii=False)
 
 def remove_other(clan_id, all_user=False):

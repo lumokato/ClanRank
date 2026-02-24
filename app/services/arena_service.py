@@ -3,10 +3,11 @@ from json import load, dump
 import time
 import os
 
-# Load account.json from root
+ACCOUNT_PATH = os.path.join('config', 'account.json')
+
 def get_account_data():
-    if os.path.exists('account.json'):
-        with open('account.json', encoding='utf-8') as fp:
+    if os.path.exists(ACCOUNT_PATH):
+        with open(ACCOUNT_PATH, encoding='utf-8') as fp:
             return load(fp)
     return {}
 
