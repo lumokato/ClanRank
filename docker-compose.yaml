@@ -1,0 +1,43 @@
+# ==============================================================================
+# 项目: AutoPCR (GitOps 部署版)
+# ==============================================================================
+# 部署方式: 
+#   Portainer -> Stacks -> Add Stack -> Repository
+#   在此模式下，Portainer 会拉取代码并依据下方的 build: . 构建镜像
+#
+# 敏感配置 (需要在 Portainer 的 Environment variables 中填入):
+#   - DOMAIN_NAME:     服务域名
+#   - NETWORK_NAME:    Traefik所在的网络名
+#   - HOST_DATA_PATH:  宿主机数据挂载根目录
+#
+# 端口说明:
+#   - 容器内部暴露: 13200
+#   - 外部访问: 通过 Traefik 代理，无需映射宿主机端口
+# ==============================================================================
+
+services:
+  app-clanrank:
+    build: .
+    image: app-clanrank:latest
+    container_name: app-clanrank
+    restart: unless-stopped
+    
+    volumes:
+      - ${HOST_DATA_PATH}/qd:/qd
+    
+    # 网络设置
+    networks:
+      - traefik_net
+    
+    # Traefik 标签配置
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.autopcr.rule=Host(`${DOMAIN_NAME}`)" 
+      - "traefik.http.routers.autopcr.entrypoints=websecure"
+      - "traefik.http.routers.autopcr.tls.certresolver=letsencrypt"
+      - "traefik.http.services.autopcr.loadbalancer.server.port=8000"
+
+networks:
+  traefik_net:
+    external: true
+    name: ${NETWORK_NAME}

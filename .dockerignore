@@ -1,0 +1,12 @@
+.git
+__pycache__
+*.pyc
+qd/
+*.log
+*.md
+*.txt
+!requirements.txt
+docker-compose.yaml
+Dockerfile
+.dockerignore
+.gitignore
