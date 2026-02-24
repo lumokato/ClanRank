@@ -9,9 +9,6 @@ RUN pip install --no-cache-dir -r /app/requirements.txt -i https://pypi.tuna.tsi
 
 COPY . /app/
 
-RUN adduser --disabled-password --no-create-home appuser
-USER appuser
-
 WORKDIR /
 
 EXPOSE 8000
