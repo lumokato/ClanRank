@@ -12,12 +12,7 @@ import time
 from json import loads
 from os.path import dirname, join, exists
 
-config = join('config', 'version.txt')
-
-version = "4.9.4"
-if exists(config):
-    with open(config, encoding='utf-8') as fp:
-        version = fp.read().strip()
+version = "99.99.99"
 
 
 # 用于补全下面的text，上面两个网址就是用以下形式补全的
@@ -133,8 +128,6 @@ class PCRClient:
             if ret_header["store_url"].split('_')[1][:-4] != version:
                 version = ret_header["store_url"].split('_')[1][:-4]
                 self.default_headers['APP-VER'] = version
-                with open(config, "w", encoding='utf-8') as fp:
-                    print(version, file=fp)
         if "sid" in ret_header:
             if ret_header["sid"] is not None and ret_header["sid"] != "":
                 self.session_id = hashlib.md5((ret_header["sid"] + "c!SID!n").encode()).hexdigest()
