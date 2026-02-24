@@ -31,7 +31,7 @@ class ArenaSearch:
         req = self.client.callapi('profile/get_profile', {'target_viewer_id': int(user_id)})
         if "server_error" in req:
             self.client.login(self.account["uid"], self.total["access_key"])
-            with open('reload.log', 'a') as f:
+            with open(os.path.join('config', 'reload.log'), 'a') as f:
                 f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+'  reload')
             print('重新登录')
             req = self.client.callapi('profile/get_profile', {'target_viewer_id': int(user_id)})

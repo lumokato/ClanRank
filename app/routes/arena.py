@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request
 from ..services.arena_service import ArenaSearch
 import time
+import os
 
 arena_bp = Blueprint('arena', __name__)
 client = ArenaSearch()
@@ -18,7 +19,7 @@ def arena_search():
         
     ip = request.access_route[0]
     vid = request.form.get("id")
-    with open('search.txt', 'a') as f:
+    with open(os.path.join('config', 'search.txt'), 'a') as f:
         f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+'    '+ip+'    '+str(vid)+'\n')
     msg = client.user_search(vid)
     return msg
