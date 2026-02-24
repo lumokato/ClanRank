@@ -32,10 +32,10 @@ services:
     # Traefik 标签配置
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.autopcr.rule=Host(`${DOMAIN_NAME}`)" 
-      - "traefik.http.routers.autopcr.entrypoints=websecure"
-      - "traefik.http.routers.autopcr.tls.certresolver=letsencrypt"
-      - "traefik.http.services.autopcr.loadbalancer.server.port=8000"
+      - "traefik.http.routers.clanrank.rule=Host(`${DOMAIN_NAME}`)" 
+      - "traefik.http.routers.clanrank.entrypoints=websecure"
+      - "traefik.http.routers.clanrank.tls.certresolver=letsencrypt"
+      - "traefik.http.services.clanrank.loadbalancer.server.port=8000"
 
 networks:
   traefik_net:
